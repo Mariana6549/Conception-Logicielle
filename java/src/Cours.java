@@ -1,4 +1,4 @@
-public class Cours {
+public class Cours implements ICours {
     private String nom;
     private String professeur;
 
@@ -7,13 +7,11 @@ public class Cours {
         this.professeur = professeur;
     }
 
-    public String getNom() {
-        return nom;
-    }
+    @Override
+    public String getNom() { return nom; }
 
-    public String getProfesseur() {
-        return professeur;
-    }
+    @Override
+    public String getProfesseur() { return professeur; }
 
     @Override
     public String toString() {

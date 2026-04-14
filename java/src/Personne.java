@@ -1,4 +1,4 @@
-public class Personne {
+public abstract class Personne implements Affichable {
     private String nom;
     private int age;
 
@@ -22,9 +22,9 @@ public class Personne {
         this.age = age;
     }
 
-    public void afficherDetails() {
-        System.out.println(this);
-    }
+    // Chaque sous-classe DOIT implémenter afficherDetails() (OCP + ISP)
+    @Override
+    public abstract void afficherDetails();
 
     @Override
     public String toString() {

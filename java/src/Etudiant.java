@@ -4,7 +4,7 @@ import java.util.List;
 public class Etudiant extends Personne {
     private String numero;
     private double moyenne;
-    private List<Cours> cours;
+    private List<ICours> cours;  // DIP : dépend de l'interface ICours, pas de Cours
 
     public Etudiant(String nom, int age, String numero, double moyenne) {
         super(nom, age);
@@ -22,7 +22,7 @@ public class Etudiant extends Personne {
         this.moyenne = moyenne;
     }
 
-    public void ajouterCours(Cours c) {
+    public void ajouterCours(ICours c) {  // DIP : accepte n'importe quelle implémentation de ICours
         this.cours.add(c);
     }
 
@@ -39,7 +39,7 @@ public class Etudiant extends Personne {
           .append(" | Âge: ").append(getAge())
           .append(" | Moyenne: ").append(moyenne).append("\n");
         sb.append("  Cours inscrits:\n");
-        for (Cours c : cours) {
+        for (ICours c : cours) {
             sb.append("    - ").append(c).append("\n");
         }
         return sb.toString();
