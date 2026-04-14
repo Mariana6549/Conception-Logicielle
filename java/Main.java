@@ -7,7 +7,7 @@ public class Main {
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
 
         // TP 1 : Héritage
-        System.out.println("=== TP 1 : Héritage ===");
+        System.out.println("TP 1 : Héritage");
         Etudiant e1 = new Etudiant("Alice Martin", 20, "E001", 15.5);
         e1.ajouterCours(new Cours("Mathématiques", "M. Dupont"));
         e1.ajouterCours(new Cours("Informatique", "Mme Leroy"));
@@ -19,7 +19,7 @@ public class Main {
         System.out.println(e2);
 
         // TP 2 : Encapsulation
-        System.out.println("=== TP 2 : Encapsulation ===");
+        System.out.println("TP 2 : Encapsulation");
         try {
             e1.setMoyenne(25); // valeur invalide : doit lever une exception
         } catch (IllegalArgumentException ex) {
@@ -35,7 +35,7 @@ public class Main {
         System.out.println();
 
         // TP 3 : Polymorphisme
-        System.out.println("=== TP 3 : Polymorphisme ===");
+        System.out.println("TP 3 : Polymorphisme");
         Enseignant prof1 = new Enseignant("M. Dupont", 45, 3500.0);
         Enseignant prof2 = new Enseignant("Mme Leroy", 38, 3200.0);
 
