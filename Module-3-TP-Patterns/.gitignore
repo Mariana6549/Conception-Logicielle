@@ -1,0 +1,8 @@
+# Java compiled output
+java/out/
+*.class
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
