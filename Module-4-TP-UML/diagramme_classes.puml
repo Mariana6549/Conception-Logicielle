@@ -1,0 +1,102 @@
+@startuml Diagramme_Classes_SGE
+
+skinparam classAttributeIconSize 0
+skinparam style strictuml
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+' ==================== Entites Metier ====================
+
+abstract class Personne {
+  - nom : String
+  - age : int
+  + getNom() : String
+  + getAge() : int
+}
+
+class Etudiant {
+  - numEtudiant : String
+  - moyenne : float
+  - cours : List<Cours>
+  + ajouterCours(cours : Cours) : void
+  + getCours() : List<Cours>
+  + getNumEtudiant() : String
+  + getMoyenne() : float
+}
+
+class Cours {
+  - nomCours : String
+  - professeur : String
+  + getNomCours() : String
+  + getProfesseur() : String
+}
+
+' ==================== Interface Repository (DIP) ====================
+
+interface IEtudiantRepository <<interface>> {
+  + ajouter(etudiant : Etudiant) : void
+  + trouverParId(id : String) : Etudiant
+  + listerTous() : List<Etudiant>
+}
+
+class EtudiantRepository {
+  - etudiants : List<Etudiant>
+  + ajouter(etudiant : Etudiant) : void
+  + trouverParId(id : String) : Etudiant
+  + listerTous() : List<Etudiant>
+}
+
+' ==================== Strategy Pattern - Affichage (SRP) ====================
+
+interface IReportGenerator <<interface>> {
+  + genererRapport(etudiant : Etudiant) : void
+}
+
+class ConsoleReportGenerator {
+  + genererRapport(etudiant : Etudiant) : void
+}
+
+class JSONReportGenerator {
+  + genererRapport(etudiant : Etudiant) : void
+}
+
+' ==================== Pilotage ====================
+
+class Main {
+  - repository : IEtudiantRepository
+  - reportGenerator : IReportGenerator
+  + run() : void
+}
+
+' ==================== Relations ====================
+
+Personne <|-- Etudiant
+
+IReportGenerator <|.. ConsoleReportGenerator
+IReportGenerator <|.. JSONReportGenerator
+IEtudiantRepository <|.. EtudiantRepository
+
+Etudiant "1" *-- "1..*" Cours : possede >
+
+Main --> IEtudiantRepository : utilise
+Main --> IReportGenerator : utilise
+
+note top of IReportGenerator
+  <b>Pattern Strategy</b>
+  Changer le format d'affichage
+  sans modifier Etudiant
+end note
+
+note left of IEtudiantRepository
+  <b>DIP</b>
+  Main depend de l'abstraction,
+  pas de l'implementation concrete
+end note
+
+note bottom of ConsoleReportGenerator
+  <b>SRP</b>
+  Logique d'affichage isolee
+  des classes metier
+end note
+
+@enduml

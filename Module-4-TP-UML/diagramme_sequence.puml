@@ -1,0 +1,61 @@
+@startuml Diagramme_Sequence_SGE
+
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantPadding 20
+skinparam sequenceBoxPadding 10
+
+actor Utilisateur as U
+
+participant "Main" as M
+participant "EtudiantRepository" as R
+participant "Etudiant" as E
+participant "Cours" as C
+participant "IReportGenerator\n(ConsoleReportGenerator)" as RG
+
+== Initialisation ==
+U -> M : run()
+
+== Creation de l'etudiant ==
+M -> E ** : new Etudiant("Alice Dupont", 21, "E001", 14.5)
+activate E
+E --> M : etudiant
+
+== Assignation des cours ==
+M -> C ** : new Cours("Mathematiques", "Prof. Martin")
+activate C
+C --> M : cours1
+
+M -> C ** : new Cours("Informatique", "Prof. Bernard")
+C --> M : cours2
+deactivate C
+
+M -> E : ajouterCours(cours1)
+E --> M : ok
+
+M -> E : ajouterCours(cours2)
+E --> M : ok
+deactivate E
+
+== Sauvegarde ==
+M -> R : ajouter(etudiant)
+activate R
+R --> M : ok
+deactivate R
+
+== Generation du rapport ==
+M -> RG : genererRapport(etudiant)
+activate RG
+RG -> E : getNom()
+E --> RG : "Alice Dupont"
+RG -> E : getMoyenne()
+E --> RG : 14.5
+RG -> E : getCours()
+E --> RG : [cours1, cours2]
+RG --> M : rapport affiche
+deactivate RG
+
+M --> U : fin
+
+@enduml
